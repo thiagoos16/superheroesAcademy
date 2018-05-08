@@ -13,4 +13,8 @@ class Superhero extends Model
     public function superpowers() {
         return $this->belongsToMany('App\Superpower')->withTimestamps();
     }
+
+    public function images() {
+        return $this->hasMany('App\Images');
+    }
 }
