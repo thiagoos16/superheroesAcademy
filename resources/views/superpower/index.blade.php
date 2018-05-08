@@ -9,9 +9,24 @@
                 </div>
             </div>
         </nav>
+        
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
+                    <div class="col-md-12">
+                        @if(Session::get('successMessage') or Session::get('errorMessage'))
+                            <div class="alert alert-primary">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <i class="material-icons">close</i>
+                                </button>
+                                @if(Session::get('successMessage')) 
+                                    <span> {{ Session::get('successMessage') }} </span>
+                                @elseif(Session::get('errorMessage'))
+                                    <span> {{ Session::get('errorMessage') }} </span>
+                                @endif
+                            </div>
+                        @endif
+                    </div>
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header card-header-primary">
@@ -19,11 +34,14 @@
                                 <p class="card-category">Register a new Superpower</p>
                             </div>
                             <div class="card-body">
-                                {{ Form::open(array('url' => '#')) }}
+                                {{ Form::open(array('url' => 'superpower/create')) }}
                                     <div class="row">
                                         <div class="col-md-12">
-                                            {{ Form::label('name', 'Name', array('class' => 'bmd-label-floating')) }} 
-                                            {{ Form::text('name', '', array('class' => 'form-control')) }}
+                                            <div form="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
+                                                {{ Form::label('name', 'Name', array('class' => 'bmd-label-floating')) }} 
+                                                {{ Form::text('name', '', array('class' => 'form-control')) }}
+                                                <span class="text-danger"> {{ $errors->first('name') }} </span>
+                                            </div>
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-primary pull-right"> Submit </button>
@@ -54,10 +72,10 @@
                                                         <td> {{ $superpower->name }} </td>
                                                         <td>
                                                             <a href="#" title="Edit">
-                                                                <i class="material-icons"> mode edit </i>
+                                                                <i class="material-icons">edit</i>
                                                             </a>
                                                             <a href="#" title="Delete">
-                                                                <i class="material-icons"> delete forever </i>
+                                                                <i class="material-icons">delete</i>
                                                             </a>
                                                         </td>
                                                     </tr>

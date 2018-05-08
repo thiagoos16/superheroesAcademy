@@ -9,13 +9,21 @@ class SuperpowerController extends Controller
 {
     public function index() {
         return view('superpower/index' ,[
-            'superpower' => $this->getAllSuperpowers(),
+            'superpowers' => $this->getAllSuperpowers(),
             'action' => 'Create'
         ]);
     }
 
     public function create(Request $request) {
-        return Superpower::create($request->all());
+        try {
+            $this->formValidation($request);
+            
+            Superpower::create($request->all());
+
+            return redirect('superpower/')->with("successMessage", "Superpower Successfully Resgistered.");    
+        } catch(Exception $e) {
+            return redirect('superpower/')->with("errorMessage", "Could Not Register Superpower."); 
+        }
     }
 
     public function update(Request $request, $id) {
