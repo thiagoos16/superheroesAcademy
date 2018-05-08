@@ -14,7 +14,7 @@
         <!-- Material Dashboard CSS -->
         <link rel="stylesheet" href="/css/material-dashboard.css">
     </head>
-    <body>
+    <body class="">
         <div class="wrapper">
             <div class="sidebar" data-color="purple" data-background-color="white">
                 <div class="logo">
@@ -23,23 +23,24 @@
                     </a>
                 </div>
                 <div class="sidebar-wrapper">
-                <ul class="nav">
-                    <li class="nav-item ">
-                        <a class="nav-link" href="#">
-                            <i class="material-icons">accessibility</i>
-                            <p>Superheroes</p>
-                        </a>
-                    </li>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="#">
-                            <i class="material-icons">whatshot</i>
-                            <p>Superpowers</p>
-                        </a>
-                    </li>
-                </ul>
-            </div>  
+                    <ul class="nav">
+                        <li class="nav-item " id="superheroes">
+                            <a class="nav-link" href="#">
+                                <i class="material-icons">accessibility</i>
+                                <p>Superheroes</p>
+                            </a>
+                        </li>
+                        <li class="nav-item " id="superpowers">
+                            <a class="nav-link" href="{{ url('superpower/') }}">
+                                <i class="material-icons">whatshot</i>
+                                <p>Superpowers</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            @yield('content')  
         </div>
-        @yield('content')
         <!--   Core JS Files   -->
         <script src="/js/core/jquery.min.js"></script>
         <script src="/js/core/popper.min.js"></script>

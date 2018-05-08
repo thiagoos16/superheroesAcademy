@@ -8,7 +8,11 @@ use App\Superpower;
 class SuperpowerController extends Controller
 {
     public function index() {
-        return Superpower::all();
+        $superpowers = Superpower::all();
+
+        return view('superpower/index' ,[
+            'superpower' => $superpowers
+        ]);
     }
 
     public function create(Request $request) {
