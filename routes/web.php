@@ -14,3 +14,11 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::group(['prefix' => 'superpower'], function () {
+    Route::get('/', 'SuperpowerController@index');
+    Route::post('/create', 'SuperpowerController@create');
+    Route::get('/edit/{id}', 'SuperpowerController@viewEdit');
+    Route::post('/edit', 'SuperpowerController@edit');
+    Route::get('/delete/{id}', 'SuperpowerController@delete');
+});
