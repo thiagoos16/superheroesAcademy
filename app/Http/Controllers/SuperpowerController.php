@@ -8,10 +8,8 @@ use App\Superpower;
 class SuperpowerController extends Controller
 {
     public function index() {
-        $superpowers = Superpower::all();
-
         return view('superpower/index' ,[
-            'superpower' => $superpowers
+            'superpower' => $this->getAllSuperpowers()
         ]);
     }
 
@@ -26,4 +24,9 @@ class SuperpowerController extends Controller
     public function delete($id) {
         return Superpower::find($id)->delete();
     } 
+
+    // Secundary Functions
+    public function getAllSuperpowers() {
+        return $superpowers = Superpower::all();
+    }
 }
