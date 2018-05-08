@@ -23,9 +23,7 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             {{ Form::label('name', 'Name', array('class' => 'bmd-label-floating')) }} 
-                                            {{ Form::text('name', 'Name', array('class' => 'form-control')) }}
-                                            <label class="bmd-label-floating">Name</label>
-                                            <input type="name" class="form-control">
+                                            {{ Form::text('name', '', array('class' => 'form-control')) }}
                                         </div>
                                     </div>
                                     <button type="submit" class="btn btn-primary pull-right"> Submit </button>
