@@ -15,6 +15,28 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header card-header-primary">
+                                <h4 class="card-title">{{(isset($action) ? $action : "Edit")}} Superpower</h4>
+                                <p class="card-category">Register a new Superpower</p>
+                            </div>
+                            <div class="card-body">
+                                {{ Form::open(array('url' => '#')) }}
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            {{ Form::label('name', 'Name', array('class' => 'bmd-label-floating')) }} 
+                                            {{ Form::text('name', 'Name', array('class' => 'form-control')) }}
+                                            <label class="bmd-label-floating">Name</label>
+                                            <input type="name" class="form-control">
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary pull-right"> Submit </button>
+                                {{ Form::close() }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header card-header-primary">
                                 <h4 class="card-title ">Superpowers Listing</h4>
                                 <p class="card-category">Select a Superpower to Update or to Delete</p>
                             </div>
