@@ -30,20 +30,27 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header card-header-primary">
-                                <h4 class="card-title">{{(isset($action) ? $action : "Edit")}} Superpower</h4>
+                                <h4 class="card-title">{{(isset($create) ? $create : "Edit")}} Superpower</h4>
                                 <p class="card-category">Register a new Superpower</p>
                             </div>
                             <div class="card-body">
-                                {{ Form::open(array('url' => 'superpower/create')) }}
+                                @if (isset($create))
+                                    {{ Form::open(array('url' => 'superpower/create')) }} 
+                                @else
+                                    {{ Form::open(array('url' => 'superpower/edit')) }}
+                                @endif
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div form="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                                                 {{ Form::label('name', 'Name', array('class' => 'bmd-label-floating')) }} 
-                                                {{ Form::text('name', '', array('class' => 'form-control')) }}
+                                                {{ Form::text('name', isset($superpower->name) ? $superpower->name : '', array('class' => 'form-control')) }}
                                                 <span class="text-danger"> {{ $errors->first('name') }} </span>
                                             </div>
                                         </div>
                                     </div>
+                                    @if(isset($superpower->id))
+                                        <input type="hidden" name="id" value="{{ $superpower->id }}">
+                                    @endif
                                     <button type="submit" class="btn btn-primary pull-right"> Submit </button>
                                 {{ Form::close() }}
                             </div>
@@ -71,7 +78,7 @@
                                                         <td> {{ $superpower->id }} </td>
                                                         <td> {{ $superpower->name }} </td>
                                                         <td>
-                                                            <a href="#" title="Edit">
+                                                            <a href="{{ url('superpower/edit', $superpower->id) }}" title="Edit">
                                                                 <i class="material-icons">edit</i>
                                                             </a>
                                                             <a href="#" title="Delete">

@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Superpower;
+use View;
 
 class SuperpowerController extends Controller
 {
     public function index() {
         return view('superpower/index' ,[
             'superpowers' => $this->getAllSuperpowers(),
-            'action' => 'Create'
+            'create' => 'Create'
         ]);
     }
 
@@ -18,16 +19,33 @@ class SuperpowerController extends Controller
         try {
             $this->formValidation($request);
             
-            Superpower::create($request->all());
-
+            $this->storeSuperpower($request);
+        
             return redirect('superpower/')->with("successMessage", "Superpower Successfully Resgistered.");    
         } catch(Exception $e) {
             return redirect('superpower/')->with("errorMessage", "Could Not Register Superpower."); 
         }
     }
 
-    public function update(Request $request, $id) {
-        return Superpower::find($id)->update($request->all());
+    public function viewEdit($id) {
+        $superpower = $this->findSuperpowerById($id);
+
+        return View::make('superpower.index')->with([
+            'superpower' => $superpower,
+            'superpowers' => $this->getAllSuperpowers()
+        ]);
+    }
+
+    public function edit(Request $request) {
+        try {
+            $this->formValidation($request);
+
+            Superpower::find($request->id)->update($request->all());
+            
+            return redirect('superpower/')->with("successMessage", "Superpower Successfully Edited.");    
+        } catch (Exception $e) {
+            return redirect('superpower/')->with("errorMessage", "Could Not Edit Superpower."); 
+        }
     }
 
     public function delete($id) {
@@ -47,5 +65,13 @@ class SuperpowerController extends Controller
             'name.min' => 'The Superpower Name must be at least 3 characteres.',
             'name.max' => 'The Superpower Name may not be greater than 191 characteres.'
         ]);
+    }
+
+    public function storeSuperpower($request) { 
+        return Superpower::create($request->all());
+    }
+
+    public function findSuperpowerById($id) {
+        return Superpower::find($id);
     }
 }
