@@ -23,12 +23,33 @@ class SuperheroController extends Controller
     }
 
     public function create(Request $request) {
-        dd($request);
+        try {
+            $superhero_temp = $request->all();
+            
+            //$superpowerList = (isset($superhero_temp['superpowerList']) ? $superhero_temp['superpowerList'] : null);
+
+            $superhero = array_slice($superhero_temp, 0, 5);
+            $this->storeSuperhero($superhero);
+
+            $images = (isset($superhero_temp['images']) ? $superhero_temp['images'] : null);
+
+            foreach($images as $image) {
+                 
+            }
+            
+            return redirect('superhero/')->with("successMessage", "Superhero Successfully Resgistered.");  
+        } catch (Exception $e) {
+
+        }
     }
 
     // Secundary Functions
 
     public function getAllSuperheroes() {
         return Superhero::all();
+    }
+
+    public function storeSuperhero($superhero) {
+        return Superhero::create($superhero);
     }
 }
