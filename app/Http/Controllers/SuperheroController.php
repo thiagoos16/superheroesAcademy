@@ -23,7 +23,7 @@ class SuperheroController extends Controller
     }
 
     public function create(Request $request) {
-
+        dd($request);
     }
 
     // Secundary Functions

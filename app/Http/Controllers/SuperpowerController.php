@@ -53,7 +53,7 @@ class SuperpowerController extends Controller
     } 
 
     // Secundary Functions
-    public function getAllSuperpowers() {
+    public static function getAllSuperpowers() {
         return $superpowers = Superpower::all();
     }
 
