@@ -25,7 +25,7 @@
                 <div class="sidebar-wrapper">
                     <ul class="nav">
                         <li class="nav-item " id="superheroes">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="{{ url('superhero/') }}">
                                 <i class="material-icons">accessibility</i>
                                 <p>Superheroes</p>
                             </a>
