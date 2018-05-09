@@ -22,3 +22,9 @@ Route::group(['prefix' => 'superpower'], function () {
     Route::post('/edit', 'SuperpowerController@edit');
     Route::get('/delete/{id}', 'SuperpowerController@delete');
 });
+
+Route::group(['prefix' => 'superhero'], function () {
+    Route::get('/', 'SuperheroController@index');
+    Route::get('/viewCreate', 'SuperheroController@viewCreate');
+    Route::post('/create', 'SuperheroController@create');
+});
