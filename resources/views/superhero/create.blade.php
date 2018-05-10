@@ -39,13 +39,15 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label class="bmd-label-floating">Nickname</label>
-                                                <input type="text" name="nickname" class="form-control">
+                                                <input type="text" name="nickname" class="form-control" value="{{ old('nickname') }}">
+                                                <span class="text-danger"> {{ $errors->first('nickname') }} </span>
                                             </div>
                                         </div>
                                         <div class="col-md-8">
                                             <div class="form-group">
                                                 <label class="bmd-label-floating">Real Name</label>
-                                                <input type="text" name="real_name" class="form-control">
+                                                <input type="text" name="real_name" class="form-control" value="{{ old('real_name') }}">
+                                                <span class="text-danger"> {{ $errors->first('real_name') }} </span>
                                             </div>
                                         </div>
                                     </div>
@@ -53,7 +55,8 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="bmd-label-floating">Catch Phrase</label>
-                                                <input type="text" name="catch_phrase" class="form-control">
+                                                <input type="text" name="catch_phrase" class="form-control" value="{{ old('catch_phrase') }}">
+                                                <span class="text-danger"> {{ $errors->first('catch_phrase') }} </span>
                                             </div>
                                         </div>
                                     </div>
@@ -61,7 +64,8 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label class="bmd-label-floating">Origin Description</label>
-                                                <textarea name="origin_description" class="form-control" rows=3> </textarea>
+                                                <textarea name="origin_description" class="form-control" rows=3> {{ old('origin_description') }} </textarea>
+                                                <span class="text-danger"> {{ $errors->first('origin_description') }} </span>
                                             </div>
                                         </div>
                                     </div>

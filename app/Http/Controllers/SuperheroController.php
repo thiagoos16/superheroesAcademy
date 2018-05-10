@@ -24,7 +24,9 @@ class SuperheroController extends Controller
         ]);
     }
 
-    public function create() {
+    public function create(Request $request) {
+        $this->formValidation($request);
+
         $superhero_temp = Input::all();
             
         $superhero = array_slice($superhero_temp, 0, 5);
@@ -35,8 +37,7 @@ class SuperheroController extends Controller
         if (!is_null($images) && !is_null($superpowerList)) {
             if (!$this->existImagesWithError($images)) {
                 DB::berginTransaction();
-                try {
-                    $this->formValidation($superhero); 
+                try { 
                     $superhero = $this->storeSuperhero($superhero);
 
                     // Creating Relationship Between Superhero and Images (Adding Images to Superhero) 
@@ -66,7 +67,22 @@ class SuperheroController extends Controller
 
     // Secundary Functions
     public function formValidation(Request $request) {
-        
+        $this->validate($request, [
+            'nickname' => 'required|min:3|max:190|unique:superhero',
+            'real_name' => 'required|min:3|max:190|',
+            'origin_description' => 'required',
+            'catch_phrase' => 'required'
+        ],[
+            'nickname.required' => 'The Superhero Nickname is required.',
+            'nickname.min' => 'The Superhero Nickname must be at least 3 characteres.',
+            'nickname.max' => 'The Superhero Nickname may not be greater than 191 characteres.',
+            'nickname.unique' => 'The Superhero Nickname already been registered.',
+            'real_name.required' => 'The Superhero Real Name is required.',
+            'real_name.min' => 'The Superhero Real Name must be at least 3 characteres.',
+            'real_name.max' => 'The Superhero Real Name may not be greater than 191 characteres.',
+            'origin_description.required' => 'The Superhero Origin Description is required.',
+            'catch_phrase.required' => 'The Superhero Catch Phrase is required.'
+        ]);
     } 
 
     public function getAllSuperheroes() {
