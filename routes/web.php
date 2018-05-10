@@ -27,4 +27,6 @@ Route::group(['prefix' => 'superhero'], function () {
     Route::get('/', 'SuperheroController@index');
     Route::get('/viewCreate', 'SuperheroController@viewCreate');
     Route::post('/create', 'SuperheroController@create');
+    Route::get('/viewEdit/{id}', 'SuperheroController@viewEdit');
+    Route::post('/edit', 'SuperheroController@edit');
 });

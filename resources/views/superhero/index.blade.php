@@ -44,7 +44,7 @@
                                             <div class="card-body">
                                                 <h4 class="card-title">{{$superhero->nickname}}</h4>
                                                 <div class="pull-right">
-                                                    <a href="#">
+                                                    <a href="{{ url('superhero/viewEdit', $superhero->id) }}">
                                                         <i class="material-icons">edit</i>
                                                     </a>
                                                     <a href="#">

@@ -89,6 +89,30 @@ class SuperheroController extends Controller
         }
     }
 
+    public function viewEdit($id) {
+        $superhero = Superhero::find($id);
+        $superpowers = $superhero->superpowers()->get();
+        $images = $superhero->images()->get();
+
+        return view('superhero/edit', [
+            'superhero' => $superhero,
+            'superpowers' => $superpowers,
+            'images' => $images
+        ]);
+    }
+
+    public function edit(Request $request) {
+        try {
+            $this->formValidation($request);
+
+            Superhero::find($request->superhero_id)->update($request->all());
+            
+            return redirect('superhero/')->with("successMessage", "Superhero Successfully Edited.");
+        } catch(Exception $e) {
+            return redirect('superhero/viewEdit')->with("errorMessage", "Could Not Edit Superhero. Make sure the fields are filled in correctly."); 
+        }
+    }
+
     // Secundary Functions
     public function formValidation(Request $request) {
         $this->validate($request, [
