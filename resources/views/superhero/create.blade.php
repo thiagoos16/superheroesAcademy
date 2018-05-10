@@ -14,13 +14,27 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
+                        @if(Session::get('successMessage') or Session::get('errorMessage'))
+                            <div class="alert alert-primary">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <i class="material-icons">close</i>
+                                </button>
+                                @if(Session::get('successMessage')) 
+                                    <span> {{ Session::get('successMessage') }} </span>
+                                @elseif(Session::get('errorMessage'))
+                                    <span> {{ Session::get('errorMessage') }} </span>
+                                @endif
+                            </div>
+                        @endif
+                    </div>
+                    <div class="col-md-12">
                         <div class="card">
                             <div class="card-header card-header-primary">
                                 <h4 class="card-title">Superhero Create</h4>
                                 <p class="card-category">Fill in the Fields to Register a New Superhero</p>
                             </div>
                             <div class="card-body">
-                                {{ Form::open(array('url' => 'superhero/create')) }} 
+                                {{ Form::open(array('url' => 'superhero/create', 'enctype' => 'multipart/form-data')) }} 
                                     <div class="row"> 
                                         <div class="col-md-4">
                                             <div class="form-group">
