@@ -39,7 +39,20 @@
                             <div class="card-body">
                                 @if(isset($superheroes))
                                     @foreach($superheroes as $superhero)
-                                        
+                                        <div class="card" style="width: 20rem;">
+                                            <img class="card-img-top" src="{{ $superhero->image->path }}" alt="Card image cap">
+                                            <div class="card-body">
+                                                <h4 class="card-title">{{$superhero->nickname}}</h4>
+                                                <div class="pull-right">
+                                                    <a href="#">
+                                                        <i class="material-icons">edit</i>
+                                                    </a>
+                                                    <a href="#">
+                                                        <i class="material-icons">delete</i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>           
                                     @endforeach
                                 @endif
                             </div>

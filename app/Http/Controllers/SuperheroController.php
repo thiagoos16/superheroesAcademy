@@ -13,8 +13,19 @@ use Illuminate\Support\Facades\Input;
 class SuperheroController extends Controller
 {
     public function index() {
+        $superheroes_aux = $this->getAllSuperheroes();
+        $superheroes = [];
+
+        foreach ($superheroes_aux as $superhero) {
+            $temp_superhero = $superhero;
+
+            $temp_superhero['image'] = $superhero->images()->first();
+
+            $superheroes[] = $temp_superhero;
+        }
+
         return view('superhero/index', [
-            'superheroes' => $this->getAllSuperheroes()
+            'superheroes' => $superheroes 
         ]);
     }
 
@@ -52,7 +63,7 @@ class SuperheroController extends Controller
                     } 
 
                     DB::commit();
-                    return redirect('superhero/viewCreate')->with("successMessage", "Superhero Successfully Resgistered.");
+                    return redirect('superhero/')->with("successMessage", "Superhero Successfully Resgistered.");
                 } catch (Exception $e) {
                     DB::rollback();
                     return redirect('superhero/viewCreate')->with("errorMessage", "Could Not Register Superhero. Exist any problem in Images or in Superpowers attributed to Superhero"); 
@@ -112,12 +123,16 @@ class SuperheroController extends Controller
     public function attachImageToSuperhero($superhero_id, $image_temp) {
         $extension = $image_temp->getClientOriginalExtension();
 
-        $path = public_path().'/images/superhero-id_' . $superhero_id . '-image_' . rand(10, 999999) . '.' . $extension;
-        File::move($image_temp, $path);
+        $n_rand = rand(10, 999999);
+
+        $pathToMove = public_path().'/images/superhero-id_' . $superhero_id . '-image_' . $n_rand . '.' . $extension;
+        File::move($image_temp, $pathToMove);
         
+        $pathToStore = '../images/superhero-id_' . $superhero_id . '-image_' . $n_rand . '.' . $extension;
+
         $image = [];
         $image['superhero_id'] = $superhero_id;
-        $image['path'] = $path;
+        $image['path'] = $pathToStore;
 
         return $this->storeImage($image);
     }
