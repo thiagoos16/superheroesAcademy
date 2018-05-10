@@ -54,6 +54,7 @@
                                             </div>
                                         </div>           
                                     @endforeach
+                                    {{ $superheroes->links() }}
                                 @endif
                             </div>
                         </div>

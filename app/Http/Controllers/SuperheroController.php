@@ -9,6 +9,8 @@ use App\Http\Controllers\SuperpowerController;
 use File;
 use DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class SuperheroController extends Controller
 {
@@ -24,8 +26,19 @@ class SuperheroController extends Controller
             $superheroes[] = $temp_superhero;
         }
 
+        //Doing a Pagination
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+
+        $col = new Collection($superheroes);
+
+        $perPage = 1;
+
+        $currentPageSearchResults = $col->slice(($currentPage - 1) * $perPage, $perPage)->all();
+
+        $superheroes = new LengthAwarePaginator($currentPageSearchResults, count($col), $perPage);
+
         return view('superhero/index', [
-            'superheroes' => $superheroes 
+            'superheroes' => $superheroes
         ]);
     }
 
