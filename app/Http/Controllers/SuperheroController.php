@@ -70,7 +70,7 @@ class SuperheroController extends Controller
                     }
 
                     foreach ($superpowerList as $superpower_id) {
-                        $this->attachSuperpowerToSuperhero($superhero, $superpower_id);
+                        $this->attachSuperpowerToSuperhero($superhero->id, $superpower_id);
                     } 
 
                     DB::commit();
@@ -202,10 +202,16 @@ class SuperheroController extends Controller
         return Images::where('superhero_id', $superhero->id)->delete();
     }
 
-    public function attachSuperpowerToSuperhero($superhero, $superpower_id) {
+    public function attachSuperpowerToSuperhero($superhero_id, $superpower_id) {
+        $superhero = $this->findSuperheroById($superhero_id);
+
         $superpower = SuperpowerController::findSuperpowerById($superpower_id);
-        
-        return $superhero->superpowers()->save($superpower);
+
+        if (!$superhero->superpowers->contains($superpower)) {
+            return $superhero->superpowers()->save($superpower);
+        } else {
+            false;
+        }
     }
 
     public function detachSuperheroSuperpowers($superhero) {     
