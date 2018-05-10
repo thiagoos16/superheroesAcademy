@@ -11,6 +11,7 @@ use DB;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use View;
 
 class SuperheroController extends Controller
 {
@@ -31,7 +32,7 @@ class SuperheroController extends Controller
 
         $col = new Collection($superheroes);
 
-        $perPage = 1;
+        $perPage = 5;
 
         $currentPageSearchResults = $col->slice(($currentPage - 1) * $perPage, $perPage)->all();
 
@@ -64,15 +65,12 @@ class SuperheroController extends Controller
                 try { 
                     $superhero = $this->storeSuperhero($superhero);
 
-                    // Creating Relationship Between Superhero and Images (Adding Images to Superhero) 
                     foreach ($images as $image_temp) {
                         $this->attachImageToSuperhero($superhero->id, $image_temp);
                     }
 
-                    // Creating Relationship Between Superhero and Superpowers (Adding Superpowers to Superhero)
                     foreach ($superpowerList as $superpower_id) {
-                        $superpower = SuperpowerController::findSuperpowerById($superpower_id);
-                        $superhero->superpowers()->save($superpower);
+                        $this->attachSuperpowerToSuperhero($superhero, $superpower_id);
                     } 
 
                     DB::commit();
@@ -113,6 +111,28 @@ class SuperheroController extends Controller
         }
     }
 
+    public function viewDelete($id) {
+        $superhero = $this->findSuperheroById($id);
+
+        return View::make('superhero.delete')->with('superhero', $superhero);
+    }
+
+    public function delete($id) {
+        try {
+            $superhero = $this->findSuperheroById($id);
+
+            $this->detachSuperheroSuperpowers($superhero);
+
+            $this->detachSuperheroImages($superhero);
+
+            $superhero->delete();
+
+            return redirect('superhero/')->with("successMessage", "Superhero Successfully Deleted.");
+        } catch(Exception $e) {
+            return redirect('superhero/')->with("errorMessage", "Could Not Delete Superhero."); 
+        }
+    }
+
     // Secundary Functions
     public function formValidation(Request $request) {
         $this->validate($request, [
@@ -135,6 +155,10 @@ class SuperheroController extends Controller
 
     public function getAllSuperheroes() {
         return Superhero::all();
+    }
+
+    public static function findSuperheroById($id) {
+        return Superhero::find($id);
     }
 
     public function storeSuperhero($superhero) {
@@ -173,4 +197,20 @@ class SuperheroController extends Controller
 
         return $this->storeImage($image);
     }
+
+    public function detachSuperheroImages($superhero) {
+        return Images::where('superhero_id', $superhero->id)->delete();
+    }
+
+    public function attachSuperpowerToSuperhero($superhero, $superpower_id) {
+        $superpower = SuperpowerController::findSuperpowerById($superpower_id);
+        
+        return $superhero->superpowers()->save($superpower);
+    }
+
+    public function detachSuperheroSuperpowers($superhero) {     
+        $superpowers = $superhero->superpowers()->get();
+
+        return $superhero->superpowers()->where('superhero_id', '==', $superhero->id)->detach();
+    } 
 }

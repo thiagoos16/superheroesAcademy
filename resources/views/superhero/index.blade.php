@@ -47,7 +47,7 @@
                                                     <a href="{{ url('superhero/viewEdit', $superhero->id) }}">
                                                         <i class="material-icons">edit</i>
                                                     </a>
-                                                    <a href="#">
+                                                    <a href="{{ url('superhero/viewDelete', $superhero->id) }}">
                                                         <i class="material-icons">delete</i>
                                                     </a>
                                                 </div>
