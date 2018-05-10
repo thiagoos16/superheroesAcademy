@@ -213,4 +213,14 @@ class SuperheroController extends Controller
 
         return $superhero->superpowers()->where('superhero_id', '==', $superhero->id)->detach();
     } 
+
+    public function detachOneSuperpower($superhero_id, $superpower_id) {
+        try {
+            $superhhero = $this->findSuperheroById($superhero_id);
+
+            return $superhhero->superpowers()->detach($superpower_id);
+        } catch(Exception $e) {
+            return false;
+        }
+    }
 }

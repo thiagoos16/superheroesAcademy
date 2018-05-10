@@ -75,6 +75,38 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header card-header-primary">
+                                <h4 class="card-title ">Superpowers of {{ $superhero->nickname }}</h4>
+                                <p class="card-category">Select a Superpower to Delete</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class=" text-primary">
+                                            <th> Name </th>
+                                            <th> Actions </th>
+                                        </thead>
+                                        <tbody>
+                                            @if (isset($superpowers))
+                                                @foreach ($superpowers as $superpower)
+                                                    <tr id="row{{$superpower->id}}">
+                                                        <td> {{ $superpower->name }} </td>
+                                                        <td>
+                                                            <a href="#table" data-superheroId="{{$superhero->id}}" data-superpowerId="{{$superpower->id}}" id="{{$superpower->id}}" title="Delete" class="btn_remove_superpower">
+                                                                <i class="material-icons">delete</i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -85,6 +117,28 @@
     <script type="text/javascript">
         $(function() {
             $('#superheroes').addClass("active");
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(document).on('click', '.btn_remove_superpower', function() {
+                var superhero_id = $(this).attr('data-superheroId');
+                var superpower_id = $(this).attr('data-superpowerId');
+                var line_id = $(this).attr('id');
+                
+                $.ajax({
+                    url:"{{ url('superhero/detachOneSuperpower') }}/" + superhero_id + "/" + superpower_id,
+                    method:"GET",
+                    success:  function() {
+                        $('#row' + line_id + '').remove();
+                        alert("Superpower Successfully Deleted.");
+                    },
+                    error:  function () {
+                        alert("Coud not Delete Superpower.");
+                    }
+                });
+            });
         });
     </script>
 @stop

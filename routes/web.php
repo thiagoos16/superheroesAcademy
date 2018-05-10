@@ -31,4 +31,5 @@ Route::group(['prefix' => 'superhero'], function () {
     Route::post('/edit', 'SuperheroController@edit');
     Route::get('/viewDelete/{id}', 'SuperheroController@viewDelete');
     Route::get('/delete/{id}', 'SuperheroController@delete');
+    Route::get('/detachOneSuperpower/{superhero_id}/{superpower_id}', 'SuperheroController@detachOneSuperpower');
 });
