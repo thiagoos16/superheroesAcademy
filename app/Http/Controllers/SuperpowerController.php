@@ -71,7 +71,7 @@ class SuperpowerController extends Controller
         return Superpower::create($request->all());
     }
 
-    public function findSuperpowerById($id) {
+    public static function findSuperpowerById($id) {
         return Superpower::find($id);
     }
 }

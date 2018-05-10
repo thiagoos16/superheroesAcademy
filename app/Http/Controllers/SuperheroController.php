@@ -36,7 +36,7 @@ class SuperheroController extends Controller
 
         if (!is_null($images) && !is_null($superpowerList)) {
             if (!$this->existImagesWithError($images)) {
-                DB::berginTransaction();
+                DB::beginTransaction();
                 try { 
                     $superhero = $this->storeSuperhero($superhero);
 
@@ -109,14 +109,14 @@ class SuperheroController extends Controller
         return false;
     }
 
-    public function attachImageToSuperhero($superhero_id, $images) {
+    public function attachImageToSuperhero($superhero_id, $image_temp) {
         $extension = $image_temp->getClientOriginalExtension();
 
-        $path = public_path().'/images/superhero-id_' . $superhero_id . '-image-' . rand(10, 999999) . '.' . $extension;
+        $path = public_path().'/images/superhero-id_' . $superhero_id . '-image_' . rand(10, 999999) . '.' . $extension;
         File::move($image_temp, $path);
         
         $image = [];
-        $image['superhero_id'] = $superhero->id;
+        $image['superhero_id'] = $superhero_id;
         $image['path'] = $path;
 
         return $this->storeImage($image);
