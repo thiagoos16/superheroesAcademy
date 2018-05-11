@@ -29,17 +29,17 @@ class SuperheroController extends Controller
 
         //Doing a Pagination
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
-
+        
         $col = new Collection($superheroes);
 
         $perPage = 5;
-
+        
         $currentPageSearchResults = $col->slice(($currentPage - 1) * $perPage, $perPage)->all();
-
+        
         $superheroes = new LengthAwarePaginator($currentPageSearchResults, count($col), $perPage);
 
         return view('superhero/index', [
-            'superheroes' => $superheroes
+            'superheroes' => $superheroes->withPath('superhero')
         ]);
     }
 

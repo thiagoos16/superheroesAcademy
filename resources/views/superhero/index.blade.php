@@ -39,7 +39,7 @@
                             <div class="card-body">
                                 @if(isset($superheroes))
                                     @foreach($superheroes as $superhero)
-                                        <div class="card" style="width: 20rem;">
+                                        <div class="card" style="width:25rem; float:left; margin:25px;">
                                             <img class="card-img-top" src="{{ isset($superhero->image->path) ? $superhero->image->path : 'fail'  }}" alt="Card image cap">
                                             <div class="card-body">
                                                 <h4 class="card-title">{{$superhero->nickname}}</h4>
@@ -54,8 +54,14 @@
                                             </div>
                                         </div>           
                                     @endforeach
-                                    {{ $superheroes->links() }}
                                 @endif
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @if(isset($superheroes))
+                                        {{ $superheroes->links() }}
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>
