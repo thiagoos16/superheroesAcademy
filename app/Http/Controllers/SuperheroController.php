@@ -156,7 +156,7 @@ class SuperheroController extends Controller
     } 
 
     public function getAllSuperheroes() {
-        return Superhero::all();
+        return Superhero::orderBy('created_at', 'desc')->get();
     }
 
     public static function findSuperheroById($id) {
