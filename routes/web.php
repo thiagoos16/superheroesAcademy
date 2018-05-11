@@ -34,4 +34,5 @@ Route::group(['prefix' => 'superhero'], function () {
     Route::get('/detachOneSuperpower/{superhero_id}/{superpower_id}', 'SuperheroController@detachOneSuperpower');
     Route::post('/addSupperpowers', 'SuperheroController@addSupperpowers');
     Route::get('/detachOneImage/{image_id}', 'SuperheroController@detachOneImage');
+    Route::post('/addImages', 'SuperheroController@addImages');
 });

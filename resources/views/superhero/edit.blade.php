@@ -182,25 +182,29 @@
                                 <p class="card-category">Select a Image to Add</p>
                             </div>
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <div class="form-group">
-                                            <label>Images</label>
+                                {{ Form::open(array('url' => 'superhero/addImages', 'enctype' => 'multipart/form-data')) }}
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <div class="form-group">
+                                                <label>Images</label>
+                                            </div>
+                                            <table class="imageTable"> 
+                                                <tbody id="listImageTable"> 
+                                                    <input type="file" name="imageList[]">
+                                                </tbody>
+                                            </table>
                                         </div>
-                                        <table class="imageTable"> 
-                                            <tbody id="listImageTable"> 
-                                                <input type="file" name="imagesList[]">
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="col-md-2" style="margin-top:13px;"> 
-                                        <div class="form-group">
-                                            <a href="#table" id="add_image" class="btn btn-primary" title="Add Image" style="border-radius:100%; padding:15px;">
-                                                <i class="material-icons">add</i>
-                                            </a>
+                                        <div class="col-md-2" style="margin-top:13px;"> 
+                                            <div class="form-group">
+                                                <a href="#imageTable" id="add_image" class="btn btn-primary" title="Add Image" style="border-radius:100%; padding:15px;">
+                                                    <i class="material-icons">add</i>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                    <input type="hidden" name="superhero_id" value="{{ $superhero->id }}">
+                                    <button type="submit" class="btn btn-primary pull-right"> Submit </button>
+                                {{ Form::close() }} 
                             </div>
                         </div>
                     </div>
@@ -278,5 +282,22 @@
                 });
             });
         });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var i = 1;
+
+            $('#add_image').click(function() {
+                $('#listImageTable').append(
+                    '<tr id="imageLine' + i + '"> <td> <input type="file" name="imageList[]"/> </td> <td> <a href="#imageTable" name="btn-remove-image-line" class="btn-remove-image-line" id="' + i + '"> <i class="material-icons">delete</i> </a> </td> </tr>'
+                );
+            });
+
+            $(document).on('click', '.btn-remove-image-line', function(){
+                var button_id = $(this).attr("id");
+                $('#imageLine' + button_id + '').remove();
+            });
+        })
     </script>
 @stop

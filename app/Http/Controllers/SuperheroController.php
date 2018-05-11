@@ -257,4 +257,21 @@ class SuperheroController extends Controller
             return false;
         }
     }
+
+    public function addImages(Request $request) { 
+        try {
+            $data = Input::all();
+
+            $superhero_id = $data['superhero_id'];
+
+            $images = (isset($data['imageList']) ? $data['imageList'] : null);
+
+            foreach ($images as $image_temp) {
+                $this->attachImageToSuperhero($superhero_id, $image_temp);
+            }
+            return redirect('superhero/viewEdit/'.$superhero_id)->with("successMessage", "Images Successfully Added.");
+        } catch (Exception $e) { 
+            return redirect('superhero/viewEdit/'.$superhero_id)->with("errorMessage", "Could not add Images.");
+        }
+    }
 }
