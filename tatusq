@@ -1,0 +1,53 @@
+warning: LF will be replaced by CRLF in app/Http/Controllers/SuperheroController.php.
+The file will have its original line endings in your working directory.
+warning: LF will be replaced by CRLF in tests/Unit/Superhero/SuperheroTest.php.
+The file will have its original line endings in your working directory.
+[1mdiff --git a/app/Http/Controllers/SuperheroController.php b/app/Http/Controllers/SuperheroController.php[m
+[1mindex 41e9217..385d8e4 100644[m
+[1m--- a/app/Http/Controllers/SuperheroController.php[m
+[1m+++ b/app/Http/Controllers/SuperheroController.php[m
+[36m@@ -167,7 +167,7 @@[m [mclass SuperheroController extends Controller[m
+         return Superhero::create($superhero);[m
+     }[m
+ [m
+[31m-    public function storeImage($image) {[m
+[32m+[m[32m    public static function storeImage($image) {[m
+         return Images::create($image);[m
+     }[m
+ [m
+[36m@@ -266,10 +266,14 @@[m [mclass SuperheroController extends Controller[m
+ [m
+             $images = (isset($data['imageList']) ? $data['imageList'] : null);[m
+ [m
+[31m-            foreach ($images as $image_temp) {[m
+[31m-                $this->attachImageToSuperhero($superhero_id, $image_temp);[m
+[32m+[m[32m            if (!$this->existImagesWithError($images)) {[m
+[32m+[m[32m                foreach ($images as $image_temp) {[m
+[32m+[m[32m                    $this->attachImageToSuperhero($superhero_id, $image_temp);[m
+[32m+[m[32m                }[m
+[32m+[m[32m                return redirect('superhero/viewEdit/'.$superhero_id)->with("successMessage", "Images Successfully Added.");[m
+[32m+[m[32m            } else {[m
+[32m+[m[32m                return redirect('superhero/viewEdit/'.$superhero_id)->with("errorMessage", "For one of the images are not supported. Insert images with extension in PNG or JPG.");[m
+             }[m
+[31m-            return redirect('superhero/viewEdit/'.$superhero_id)->with("successMessage", "Images Successfully Added.");[m
+         } catch (Exception $e) { [m
+             return redirect('superhero/viewEdit/'.$superhero_id)->with("errorMessage", "Could not add Images.");[m
+         }[m
+[1mdiff --git a/tests/Unit/Superhero/SuperheroTest.php b/tests/Unit/Superhero/SuperheroTest.php[m
+[1mindex 1ae1312..71595ea 100644[m
+[1m--- a/tests/Unit/Superhero/SuperheroTest.php[m
+[1m+++ b/tests/Unit/Superhero/SuperheroTest.php[m
+[36m@@ -44,4 +44,13 @@[m [mclass SuperheroTest extends TestCase[m
+ [m
+         Superhero::find($superhero->id)->delete();[m
+     }[m
+[32m+[m
+[32m+[m[32m    public function test_not_find_superhero_by_id()[m
+[32m+[m[32m    {[m
+[32m+[m[32m        $id = 1;[m[41m [m
+[32m+[m
+[32m+[m[32m        $superhero_find = SuperheroController::findSuperheroById($id);[m
+[32m+[m
+[32m+[m[32m        $this->assertEquals($superhero_find, null);[m
+[32m+[m[32m    }[m
+ }[m

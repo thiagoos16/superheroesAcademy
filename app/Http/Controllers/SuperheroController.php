@@ -167,7 +167,7 @@ class SuperheroController extends Controller
         return Superhero::create($superhero);
     }
 
-    public function storeImage($image) {
+    public static function storeImage($image) {
         return Images::create($image);
     }
 
@@ -266,10 +266,14 @@ class SuperheroController extends Controller
 
             $images = (isset($data['imageList']) ? $data['imageList'] : null);
 
-            foreach ($images as $image_temp) {
-                $this->attachImageToSuperhero($superhero_id, $image_temp);
+            if (!$this->existImagesWithError($images)) {
+                foreach ($images as $image_temp) {
+                    $this->attachImageToSuperhero($superhero_id, $image_temp);
+                }
+                return redirect('superhero/viewEdit/'.$superhero_id)->with("successMessage", "Images Successfully Added.");
+            } else {
+                return redirect('superhero/viewEdit/'.$superhero_id)->with("errorMessage", "For one of the images are not supported. Insert images with extension in PNG or JPG.");
             }
-            return redirect('superhero/viewEdit/'.$superhero_id)->with("successMessage", "Images Successfully Added.");
         } catch (Exception $e) { 
             return redirect('superhero/viewEdit/'.$superhero_id)->with("errorMessage", "Could not add Images.");
         }
