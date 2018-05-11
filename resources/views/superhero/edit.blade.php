@@ -252,13 +252,13 @@
                 var value= $('#superpower_id option:selected').text();
                 
                 $('#superpowersListTable').append(
-                    '<tr id="row' + i + '"> <td> <label> ' + value + ' </label> <input type="hidden" name="superpowerList[]" value="' + id + '"/> </td> <td> <a href="#table" name="btn_remove" class="btn_remove" id="' + i + '"> <i class="material-icons">delete</i> </a> </td> </tr>'
+                    '<tr id="rowLine' + i + '"> <td> <label> ' + value + ' </label> <input type="hidden" name="superpowerList[]" value="' + id + '"/> </td> <td> <a href="#table" name="btn_remove" class="btn_remove" id="' + i + '"> <i class="material-icons">delete</i> </a> </td> </tr>'
                 );
             });
 
             $(document).on('click', '.btn_remove', function(){
                 var button_id = $(this).attr("id");
-                $('#row' + button_id + '').remove();
+                $('#rowLine' + button_id + '').remove();
             });
         })
     </script>
