@@ -163,7 +163,7 @@ class SuperheroController extends Controller
         return Superhero::find($id);
     }
 
-    public function storeSuperhero($superhero) {
+    public static function storeSuperhero($superhero) {
         return Superhero::create($superhero);
     }
 
