@@ -44,4 +44,13 @@ class SuperheroTest extends TestCase
 
         Superhero::find($superhero->id)->delete();
     }
+
+    public function test_not_find_superhero_by_id()
+    {
+        $id = 1; 
+
+        $superhero_find = SuperheroController::findSuperheroById($id);
+
+        $this->assertEquals($superhero_find, null);
+    }
 }
