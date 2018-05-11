@@ -107,6 +107,103 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header card-header-primary">
+                                <h4 class="card-title ">Add Superpowers of {{ $superhero->nickname }}</h4>
+                                <p class="card-category">Select a Superpower to Add</p>
+                            </div>
+                            <div class="card-body">
+                                {{ Form::open(array('url' => 'superhero/addSupperpowers', 'enctype' => 'multipart/form-data')) }}
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <div class="form-group">
+                                                <label>Superpowers List</label>
+                                                <select class="form-control" id="superpower_id">
+                                                    <option value = "" disabled selected>Superpower</option>
+                                                    @foreach($superpowersList as $superpower)
+                                                        <option value="{{$superpower->id}}"> {{$superpower->name}} </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2" style="margin-top:13px;"> 
+                                            <div class="form-group">
+                                                <a href="#table" id="add_superpower" class="btn btn-primary" title="Add Superpower" style="border-radius:100%; padding:15px;">
+                                                    <i class="material-icons">add</i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <table class="table"> 
+                                                <tbody id="superpowersListTable"> 
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" name="superhero_id" value="{{ $superhero->id }}">
+                                    <button type="submit" class="btn btn-primary pull-right"> Submit </button>
+                                {{ Form::close() }} 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header card-header-primary">
+                                <h4 class="card-title ">Images of {{ $superhero->nickname }}</h4>
+                                <p class="card-category">Select a Image to Delete</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <div class="image-table">
+                                        @foreach($images as $image)
+                                            <div class="card" style="width:12rem; float:left; margin:7px;" id="rowImage{{$image->id}}">
+                                                <img class="card-img-top" src="../{{ $image->path }}" alt="Card image cap">
+                                                <div class="card-body">
+                                                    <div class="pull-right">
+                                                        <a href="#image-table" class="btn-remove-image" data-imageId="{{$image->id}}" id="{{$image->id}}">
+                                                            <i class="material-icons">delete</i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>           
+                                        @endforeach
+                                    </div>   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header card-header-primary">
+                                <h4 class="card-title ">Add Images of {{ $superhero->nickname }}</h4>
+                                <p class="card-category">Select a Image to Add</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label>Images</label>
+                                        </div>
+                                        <table class="imageTable"> 
+                                            <tbody id="listImageTable"> 
+                                                <input type="file" name="imagesList[]">
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-2" style="margin-top:13px;"> 
+                                        <div class="form-group">
+                                            <a href="#table" id="add_image" class="btn btn-primary" title="Add Image" style="border-radius:100%; padding:15px;">
+                                                <i class="material-icons">add</i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -136,6 +233,47 @@
                     },
                     error:  function () {
                         alert("Coud not Delete Superpower.");
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var i = 1;
+
+            $('#add_superpower').click(function() {
+                var id = $('#superpower_id').val();
+                var value= $('#superpower_id option:selected').text();
+                
+                $('#superpowersListTable').append(
+                    '<tr id="row' + i + '"> <td> <label> ' + value + ' </label> <input type="hidden" name="superpowerList[]" value="' + id + '"/> </td> <td> <a href="#table" name="btn_remove" class="btn_remove" id="' + i + '"> <i class="material-icons">delete</i> </a> </td> </tr>'
+                );
+            });
+
+            $(document).on('click', '.btn_remove', function(){
+                var button_id = $(this).attr("id");
+                $('#row' + button_id + '').remove();
+            });
+        })
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(document).on('click', '.btn-remove-image', function() {
+                var image_id = $(this).attr('data-imageId');
+                var line_id = $(this).attr('id');
+                
+                $.ajax({
+                    url:"{{ url('superhero/detachOneImage') }}/" + image_id,
+                    method:"GET",
+                    success:  function() {
+                        $('#rowImage' + line_id + '').remove();
+                        alert("Image Successfully Deleted.");
+                    },
+                    error:  function () {
+                        alert("Coud not Delete Image.");
                     }
                 });
             });

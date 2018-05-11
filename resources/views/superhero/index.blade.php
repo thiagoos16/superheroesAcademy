@@ -40,7 +40,7 @@
                                 @if(isset($superheroes))
                                     @foreach($superheroes as $superhero)
                                         <div class="card" style="width: 20rem;">
-                                            <img class="card-img-top" src="{{ $superhero->image->path }}" alt="Card image cap">
+                                            <img class="card-img-top" src="{{ isset($superhero->image->path) ? $superhero->image->path : 'fail'  }}" alt="Card image cap">
                                             <div class="card-body">
                                                 <h4 class="card-title">{{$superhero->nickname}}</h4>
                                                 <div class="pull-right">

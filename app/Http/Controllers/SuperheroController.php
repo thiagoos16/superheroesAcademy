@@ -91,11 +91,13 @@ class SuperheroController extends Controller
         $superhero = Superhero::find($id);
         $superpowers = $superhero->superpowers()->get();
         $images = $superhero->images()->get();
+        $superpowersList = SuperpowerController::getAllSuperpowers();
 
         return view('superhero/edit', [
             'superhero' => $superhero,
             'superpowers' => $superpowers,
-            'images' => $images
+            'images' => $images,
+            'superpowersList' => $superpowersList
         ]);
     }
 
@@ -225,6 +227,32 @@ class SuperheroController extends Controller
             $superhhero = $this->findSuperheroById($superhero_id);
 
             return $superhhero->superpowers()->detach($superpower_id);
+        } catch(Exception $e) {
+            return false;
+        }
+    }
+
+    public function addSupperpowers(Request $request) {
+        try {
+            $data = Input::all();
+
+            $superhero_id = $data['superhero_id'];
+
+            $superpowerList = (isset($data['superpowerList']) ? $data['superpowerList'] : null);
+
+            foreach ($superpowerList as $superpower_id) {
+                $this->attachSuperpowerToSuperhero($superhero_id, $superpower_id);
+            }
+            return redirect('superhero/viewEdit/'.$superhero_id)->with("successMessage", "Superpowers Successfully Added.");
+        } catch (Exception $e) {
+            return redirect('superhero/viewEdit/'.$superhero_id)->with("errorMessage", "Could not add Superpowers.");
+        }  
+    }
+
+    public function detachOneImage($image_id) {
+        try {
+            Images::find($image_id)->delete();
+            return redirect('superhero/')->with("successMessage", "Image Successfully Deleted.");
         } catch(Exception $e) {
             return false;
         }
