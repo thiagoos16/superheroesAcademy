@@ -53,4 +53,28 @@ class SuperheroTest extends TestCase
 
         $this->assertEquals($superhero_find, null);
     }
+
+    public function test_edit_superhero() {
+        $data = [
+            'nickname' => 'Superhero_Test_Case',
+            'real_name' => 'AL Simmons',
+            'origin_description' => 'Albert Francis "Al" Simmons (Lt. Colonel, USMC-Ret.), born in Detroit Michigan, was a highly trained Force Recon Marine who was at his most successful point when he saved the President from an attempted assassination...',
+            'catch_phrase' => 'Nothing to Say'
+        ];
+
+        $superhero = SuperheroController::storeSuperhero($data);
+
+        $data_new = [
+            'nickname' => 'Superhero_Edited',
+            'real_name' => 'AL Simmons  Edited',
+            'origin_description' => 'Albert Francis "Al" Simmons (Lt. Colonel, USMC-Ret.), born in Detroit Michigan, was a highly trained Force Recon Marine who was at his most successful point when he saved the President from an attempted assassination...',
+            'catch_phrase' => 'Nothing to Say Edited'
+        ];
+
+        $superhero_edited = Superhero::find($superhero->id)->update($data_new);
+
+        $this->assertTrue($superhero_edited);
+
+        Superhero::find($superhero->id)->delete();
+    }
 }
