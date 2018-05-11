@@ -6,6 +6,7 @@ use Tests\TestCase;
 use App\Http\Controllers\SuperheroController;
 use App\Superhero;
 use App\Images;
+use App\Superpower;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SuperheroTest extends TestCase
@@ -72,9 +73,9 @@ class SuperheroTest extends TestCase
             'catch_phrase' => 'Nothing to Say Edited'
         ];
 
-        $superhero_edited = Superhero::find($superhero->id)->update($data_new);
+        $response = Superhero::find($superhero->id)->update($data_new);
 
-        $this->assertTrue($superhero_edited);
+        $this->assertTrue($response);
 
         Superhero::find($superhero->id)->delete();
     }
@@ -103,5 +104,32 @@ class SuperheroTest extends TestCase
         Superhero::find($superhero->id)->delete();
 
         Images::find($image->id)->delete();
+    }
+
+    public function test_add_superpower_to_superhero() {
+        $data = [
+            'nickname' => 'Superhero_Test_Case',
+            'real_name' => 'AL Simmons',
+            'origin_description' => 'Albert Francis "Al" Simmons (Lt. Colonel, USMC-Ret.), born in Detroit Michigan, was a highly trained Force Recon Marine who was at his most successful point when he saved the President from an attempted assassination...',
+            'catch_phrase' => 'Nothing to Say'
+        ];
+
+        $superhero = SuperheroController::storeSuperhero($data);
+
+        $data_superpower =  [
+            'name' => 'Superpower_Test_Case'
+        ];  
+
+        $superpower = Superpower::create($data_superpower);
+
+        $response = $superhero->superpowers()->save($superpower);
+
+        $this->assertInstanceOf(Superpower::class, $response);
+
+        $superhero->superpowers()->where('superhero_id', '==', $superhero->id)->detach();
+
+        Superhero::find($superhero->id)->delete();
+
+        Superpower::find($superpower->id)->delete();
     }
 }
