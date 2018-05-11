@@ -13,6 +13,41 @@
 
         <!-- Material Dashboard CSS -->
         <link rel="stylesheet" href="/css/material-dashboard.css">
+
+        <style>
+            .pagination {
+                display: inline-block;
+            }
+
+            .pagination a {
+                color: black;
+                float: left;
+                padding: 8px 16px;
+                text-decoration: none;
+            }
+
+            .pagination li.active span {
+                background-color: #9c27b0;
+                color: white;
+                float: left;
+                padding: 8px 16px;
+                text-decoration: none;
+                border-radius:3px;
+                box-shadow: 0 4px 20px 0px rgba(0, 0, 0, .14),
+                            0 7px 10px -5px rgba(156, 39, 176, 0.4);
+                webkit-box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 
+                                   0 7px 10px -5px rgba(156, 39, 176, 0.4);
+            }
+
+            .pagination a:hover:not(.active) {background-color: #ddd;}
+
+            .pagination li.disabled span {
+                color: black;
+                float: left;
+                padding: 8px 16px;
+                text-decoration: none;
+            }
+        </style>
     </head>
     <body class="">
         <div class="wrapper">

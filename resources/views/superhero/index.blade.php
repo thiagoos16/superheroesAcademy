@@ -56,13 +56,9 @@
                                     @endforeach
                                 @endif
                             </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    @if(isset($superheroes))
-                                        {{ $superheroes->links() }}
-                                    @endif
-                                </div>
-                            </div>
+                            @if(isset($superheroes))
+                                {{ $superheroes->links() }}
+                            @endif
                         </div>
                     </div>
                 </div>
