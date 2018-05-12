@@ -1,58 +1,69 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+## Model Entity Relationship
+<p align="center"><img src="mer.png"></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+## Production Address:
+- http://superheroacamedy.herokuapp.com/
 
-## About Laravel
+## About Superhero Academy
+ Superhero Academy is a web application that allows the Superhero CRUD operations. In this system can you do:
+ - CRUD Superheroes that includes: 
+    - Create and Edit Superpowers to attach in a Superhero.
+    - Attach any Images in a Superhero.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+## Setup
+ 1. Install WAMP.
+ 2. Clone the project repository and install it in the **wamp/wwww** folder.  
+ 3. Run migrations `php artisan migrate`. Make sure that the following tables have been created: _Superhero_, _Superpower_ and _Images_.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Run Unit Tests
+1. With opened terminal in the root project run `vendor/bin/phpunit`.
+2. Your terminal must be show as the below image:
+<p align="center"><img src="tests_runned.png"></p>   
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications.
+## Test Cases
+- Create a Superpower: 
+  1. Click in Superpower Aba.
+  2. Fill in the Name field.
+  3. Submit.
+  4. The following message will be shown: `Superpower Successfully Resgistered.`
 
-## Learning Laravel
+- Create a Superhero:
+  1. Click in Superhero Aba.
+  2. In the page will be show the Superhero Listing. Click in the Circular Button localized in the page top.
+  3. Fill the Following Fields: _Nickname_, _Real Name_, _Catch Phrase_, _Origin Description_. 
+  4. Now you will add as many _Superpowers_ as you want in you Superhero. 
+    - Click In the _Superpower_ field.
+    - Select a Superpower.
+    - Click in the Right Circular Button to Append Superpower below.
+    - You can delete this item from list by clicking the right trash icon.
+  5. Now you will add as many _Images_ as you want in you Superhero.
+    - Click In the input field and Select the Image [Make Sure the Image was downloaded from web].
+    - If you want add more images click in the Right Circular Button and Click the input field appended below.
+    - You can delete this item from list by clicking the right trash icon.
+  6. Submit.
+  7. The following message will be shown: `Superhero Successfully Resgistered.`        
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of any modern web application framework, making it a breeze to get started learning the framework.
+- Edit a Superhero:
+  1. Click in Superhero Aba.
+  2. In the page will be show the Superhero Listing. Click in the Superhero Pencil Icon that you want edit.
+  3. In Superhero Edit you can Edit de Fields, Add/Delete Superpowers and Add/Delete Images separately:
+    1. Edit Fields:
+      - Fill the superhero fields with new values.
+      - Submit.
+      - The following message will be shown: `Superhero Successfully Edited.`
+    2. Edit Superpowers:
+      - You can Delete it Clicking the right trash icon. A Successfully Alert will be show in the top page.
+      - You can Add it in the Right Mini Form by Selecting the _Superpowers_ that you want.
+        - Submit.
+        - The following message will be shown: `Superpowers Successfully Added.`
+    3. Edit Images:   
+      - You can Delete it Clicking the trash icon. A Successfully Alert will be show in the top page.
+      - You can Add it in the Right Mini Form by Selecting the _Images_ that you want.
+        - Submit.
+        - The following message will be shown: `Images Successfully Added.`
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell):
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Pulse Storm](http://www.pulsestorm.net/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Delete a Superhero:
+    1. Click in Superhero Aba.
+    2. In the page will be show the Superhero Listing. Click in the Superhero Trash Icon that you want delete.
+    3. Confirm the Deletion.
+    4. The following message will be shown: `Superhero Successfully Deleted.`
