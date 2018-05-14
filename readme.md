@@ -2,7 +2,7 @@
 <p align="center"><img src="mer.png"></p>
 
 ## Production Address:
-- http://superheroacamedy.herokuapp.com/
+- http://superheroacademy.herokuapp.com/
 
 ## About Superhero Academy
  Superhero Academy is a web application that allows the Superhero CRUD operations. In this system can you do:
